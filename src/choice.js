@@ -42,7 +42,7 @@ class Choice extends Component {
         {isMedia ?
         <CardMedia
           className={classes.media}
-          image={'/img/' + data}
+          image={require('./img/' + data)}
         />
         :
         <CardContent>

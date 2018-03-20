@@ -38,24 +38,52 @@ let getCheerio = new Promise((resolve, reject) => {
 const output_img_dir = './html2png/output/img/'
 const output_html_dir = './html2png/output/html/'
 
-const label_filname = './html2png/input/selected.json'
-
+const label_filname = './html2png/input/test.json'
+const waterfall = require('async/waterfall');
+const everySeries = require('async/everySeries');
+var idx = 0
 getCheerio.then(($)=>{
   // console.log('resolved');
   fs.readFile(label_filname, (err, json) => {
     if (!err){
       data = JSON.parse(json)
-      for (const idx in data){
+      keys = Object.keys(data)
+
+      function savepng(idx,finish){
         const title = data[idx].articleTitle
         const subtitle = data[idx].firstSentence
         const highlight = data[idx].topHighlight
-        $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > div > a > h3').text(title)
-        $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > a > div').text(subtitle)
-        $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.ui-caption.u-flex.u-paddingBottom2').remove()
-        webshot($.html(), output_img_dir+`${idx}_0.png`, options, (err) => {if (err) console.log(err)});
-        $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > a > div').text(highlight)
-        webshot($.html(), output_img_dir+`${idx}_1.png`, options, (err) => {if (err) console.log(err)});
+        waterfall([
+          function(callback){
+            $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > div > a > h3').text(title)
+            callback(null);
+          },
+          function(callback){
+            $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > a > div').text(subtitle)
+            callback(null);
+          },
+          function(callback){
+            $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.ui-caption.u-flex.u-paddingBottom2').remove()
+            callback(null);
+          },
+          function(callback){
+            webshot($.html(), output_img_dir+`${idx}_0.png`, options, (err) => {callback(null)});
+          },
+          function(callback){
+            $('#prerendered > div.homeContainer.u-clearfix.js-homepage > div.js-homeStream > div > section > div.heroGrid-largeCard.js-trackedPost.uiScale.uiScale-ui--regular.uiScale-caption--small > div > div.heroGrid-postContent > div.heroGrid-titleClamp.u-marginBottom16 > a > div').text(highlight)
+            callback(null);
+          },
+          function(callback){
+            webshot($.html(), output_img_dir+`${idx}_1.png`, options, (err) => {callback(null)});
+          }
+        ], ()=>{
+          console.log(idx);
+          finish(null, idx)
+        });
       }
+
+      everySeries(keys, savepng, (err, result)=>{console.log(result)})
+
     }else console.log(err);
   })
 }).catch((reason)=>{console.log(reason)})
