@@ -2,19 +2,48 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Survey from './survey.js';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+
+const styles = theme => ({
+  instruction: {
+    fontSize: 'large',
+    color: '#000000'
+  },
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: 600
+  })
+});
 
 // get [[{image, id}...], ...]
 // post [[{id, bool}...], ...]
 class App extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Thanks for helping us on this survey!</h1>
-        </header>
+        <Paper className={classes.root} elevation={4}>
+          <Typography align='left' variant="headline" component="h3" className={classes.instruction}>
+            {'This task is composed of 2 steps:'}
+          </Typography>
+          <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
+            {'1.Please select whether you will read this article or not, based on the title of this article and a snippet of this article. If you will read this article, please select "Interested". If you will not read this article, please select "Not Interested".'}
+          </Typography>
+          <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
+            {'2.Choose which snippet of text has appeared in the first step, no matter whether you selected "Yes" or "NO" in the first step for the article which this snippet of text belongs to.'}
+          </Typography>
+        </Paper>
+
         <Survey
-          needSelected={[2, 4]}
+          needSelected={[4, 6]}
           datas={[
             [
               { id: '1', img: '1_0.png' },
@@ -61,4 +90,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
