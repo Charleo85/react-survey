@@ -67,7 +67,7 @@ class Survey extends Component {
       setTimeout(() => {
         this.setState(prevState =>
           Object.assign(prevState, {
-            submitProgress: Math.random() > 0.5 ? 2 : 3
+            submitProgress: 2
           })
         );
       }, 3000);
@@ -117,13 +117,13 @@ class Survey extends Component {
 
     return (
       <div>
-        {inSurvey && (
+        {/* {inSurvey && (
           <Typography component="h1" className={classes.instruction}>
             {inSubmissionPage
               ? `Select the ${selectionCap} article decriptions you have seen in the last page`
               : `Select exactly ${selectionCap} articles you want to read mostly`}
           </Typography>
-        )}
+        )} */}
         {inSurvey ? (
           dataOnPage.map(data => (
             <Choice
@@ -137,7 +137,10 @@ class Survey extends Component {
         ) : (
           <div className={classes.placeholder}>
             {submissionSucceed ? (
-              <Typography>{'Success!   MTurk Code: 123456'}</Typography>
+              <div>
+                <Typography variant="headline">{'Success!   MTurk Code: 123456'}</Typography>
+                <h1 className="App-title">Thanks for helping us on this survey!</h1>
+              </div>
             ) : (
               !canRetry && (
                 <Fade
