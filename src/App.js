@@ -43,7 +43,7 @@ class App extends Component {
         </Paper>
 
         <Survey
-          needSelected={[4, 6]}
+          needSelected={[4, 4]}
           datas={[
             [
               { id: '1', img: '1_0.png' },
@@ -56,22 +56,12 @@ class App extends Component {
                 id: '5_1',
                 img:
                   'If we hope to create something of lasting value, we need to start with what people want — not just with what’s technically possible.'
-              },
-              {
-                id: '4_0',
-                img:
-                  'My list is incredibly short. But it’s also incredibly non-negotiable.'
-              },
+              }
               {
                 id: '6_0',
                 img:
                   'Every Frame a Painting is officially dead. Nothing sinister; we just decided to end it, rather than keep on making stuff.'
-              },
-              {
-                id: '2_1',
-                img:
-                  'Which is why Bitcoin is an excellent idea. It fulfills the needs of the complex system, not because it is a cryptocurrency, but precisely because it has no owner, no authority that can decide on its fate. It is owned by the crowd, its users. And it has now a track record of several years, enough for it to be an animal in its own right.'
-              },
+              }
               {
                 id: '3_1',
                 img:
