@@ -35,11 +35,19 @@ class App extends Component {
             {'This task is composed of 2 steps:'}
           </Typography>
           <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {'1.Please select whether you will read this article or not, based on the title of this article and a snippet of this article. If you will read this article, please select "Interested". If you will not read this article, please select "Not Interested".'}
+            {'Step 1. Please r'}
+
+            {'Step 1. Please select whether you will read this article or not, after reading the title of this article and a snippet of this article. If you will read this article, please select "Interested". If you will not read this article, please select "Not Interested" test react.'}
           </Typography>
           <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {'2.Choose which snippet of text has appeared in the first step, no matter whether you selected "Yes" or "NO" in the first step for the article which this snippet of text belongs to.'}
+            {' As the following example shows, "Why Even Ambitious People Rarely Become Successful" is the <em>title</em> of an article. And "Success is not extrinsic" is a <em>snippet</em> of this article.'
+            }
           </Typography>
+          <img src={require('./img/0_0.png')} />
+          <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
+            {'Step 2. Please choose which snippet of text has appeared in the first step, no matter whether you selected "Yes" or "NO" in the first step for the article which this snippet of text belongs to.'}
+          </Typography>
+        
         </Paper>
 
         <Survey
