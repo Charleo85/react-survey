@@ -32,21 +32,20 @@ class App extends Component {
       <div className="App">
         <Paper className={classes.root} elevation={4}>
           <Typography align='left' variant="headline" component="h3" className={classes.instruction}>
-            {'This task is composed of 2 steps:'}
+            {'Instruction: this task is composed of  steps and you need to go through two pages.'}
           </Typography>
           <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {'Step 1. Please r'}
-
-            {'Step 1. Please select whether you will read this article or not, after reading the title of this article and a snippet of this article. If you will read this article, please select "Interested". If you will not read this article, please select "Not Interested" test react.'}
+            {'Step 1. Please read the title of the article and a snippet of text of this article. In this page, we will show you 4 articles and their snippet of text. Please read everyone.'}
+             {' As the following example shows, "Why Even Ambitious People Rarely Become Successful" is the title of an article. And "Success is not extrinsic" is a snippet of this article.'
+              }
+            <img src={require('./img/0_0.png')} />
+            {'Step 2. Please select whether you will read this article or not, after reading the title of an article and its snippet of text. If you will read the article, please select "Interested". If you will not read the article, please select "Not Interested". Decisions for these 4 articles are independent.'}
+            {'Step 3. Please click "NEXT" in the bottom of the page to switch to the second page.'}
+            {'Step 4. Please read a snippet of text from an article. In this page, we will show you 6 snippets and these snippets are from different articles. Please read everyone.'}
+             {'Step 5. Please select whether the snippet of text has appeared in the first page or not. If this snippet of text has appeared in the first page, please select "Appeared". Otherwise, please select "Not Appeared". Each decision is independent.'}
+             {'Step 6. Please click "SUBMIT" in the bottom of the page to submit your results. That is all.'}
           </Typography>
-          <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {' As the following example shows, "Why Even Ambitious People Rarely Become Successful" is the <em>title</em> of an article. And "Success is not extrinsic" is a <em>snippet</em> of this article.'
-            }
-          </Typography>
-          <img src={require('./img/0_0.png')} />
-          <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {'Step 2. Please choose which snippet of text has appeared in the first step, no matter whether you selected "Yes" or "NO" in the first step for the article which this snippet of text belongs to.'}
-          </Typography>
+          
         
         </Paper>
 
