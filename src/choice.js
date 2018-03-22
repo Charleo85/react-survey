@@ -61,20 +61,20 @@ class Choice extends Component {
             onChange={this.selectAction('1')}
             value='1'
             name="yes"
-            label="Interested"
+            label="yes"
             classes={{
               checked: classes.checked,
             }}
           />
-          <a onClick={this.selectAction('1')}>{"Interested"}</a>
+          <a onClick={this.selectAction('1')}>{isMedia ? "Interested" : "Appeared"}</a>
           <Radio
             checked={this.state.isChosen === '0'}
             onChange={this.selectAction('0')}
             value='0'
             name="no"
-            label="Not Interested"
+            label="no"
           />
-          <a onClick={this.selectAction('0')}>{"Not Interested"}</a>
+          <a onClick={this.selectAction('0')}>{isMedia ? "Not Interested" : "Not Appeared"}</a>
         </CardActions>
       </Card>
     );
