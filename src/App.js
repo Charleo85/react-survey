@@ -32,25 +32,23 @@ class App extends Component {
       <div className="App">
         <Paper className={classes.root} elevation={4}>
           <Typography align='left' variant="headline" component="h3" className={classes.instruction}>
-            {'Instruction: this task is composed of  steps and you need to go through two pages.'}
+            {'Instruction: this task is composed of 6 steps and you need to go through two pages. Step 1, step 2 and step 3 are required to finish in the first page. And step 4, step 5 and step 6 are required to finish in the second page.'}
           </Typography>
           <Typography paragraph align='left' variant="body2" component="p" className={classes.instruction}>
-            {'Step 1. Please read the title of the article and a snippet of text of this article. In this page, we will show you 4 articles and their snippet of text. Please read everyone.'}
-             {' As the following example shows, "Why Even Ambitious People Rarely Become Successful" is the title of an article. And "Success is not extrinsic" is a snippet of this article.'
-              }
-            <img src={require('./img/0_0.png')} />
-            {'Step 2. Please select whether you will read this article or not, after reading the title of an article and its snippet of text. If you will read the article, please select "Interested". If you will not read the article, please select "Not Interested". Decisions for these 4 articles are independent.'}
-            {'Step 3. Please click "NEXT" in the bottom of the page to switch to the second page.'}
-            {'Step 4. Please read a snippet of text from an article. In this page, we will show you 6 snippets and these snippets are from different articles. Please read everyone.'}
-             {'Step 5. Please select whether the snippet of text has appeared in the first page or not. If this snippet of text has appeared in the first page, please select "Appeared". Otherwise, please select "Not Appeared". Each decision is independent.'}
-             {'Step 6. Please click "SUBMIT" in the bottom of the page to submit your results. That is all.'}
-          </Typography>
-          
-        
+          Step 1. Please read the title of an article and a snippet of text of this article. In this page, we will show you 4 articles and their snippets of text. Please read everyone carefully and you will need the content of these snippets to finish step 4, step 5 and step 6. 
+          <br />
+          As the following example shows, "Why Even Ambitious People Rarely Become Successful" is the title of an article. And "Success is not extrinsic" is a snippet of this article.
+            <img src={require('./img/0_0.png')} /><br />
+            Step 2. Please select whether you will read this article or not, after reading the title of an article and its snippet of text. If you will read the article, please select "Interested". If you will not read the article, please select "Not Interested". Decisions for these 4 articles are independent.<br />
+            Step 3. Please click "NEXT" in the bottom of the page to switch to the second page.<br />
+            Step 4. Please read a snippet of text from an article. In this page, we will show you 6 snippets and these snippets are from different articles. Please read everyone.<br />
+             Step 5. Please select whether the snippet of text has appeared in the first page or not. If this snippet of text has appeared in the first page, please select "Appeared". Otherwise, please select "Not Appeared". Each decision is independent.<br />
+             Step 6. Please click "SUBMIT" in the bottom of the page to submit your results. That is all.<br />
+          </Typography>      
         </Paper>
 
         <Survey
-          needSelected={[4, 6]}
+          needSelected={[4, 4]}
           datas={[
             [
               { id: '1', img: '1_0.png' },
@@ -65,19 +63,9 @@ class App extends Component {
                   'If we hope to create something of lasting value, we need to start with what people want — not just with what’s technically possible.'
               },
               {
-                id: '4_0',
-                img:
-                  'My list is incredibly short. But it’s also incredibly non-negotiable.'
-              },
-              {
                 id: '6_0',
                 img:
                   'Every Frame a Painting is officially dead. Nothing sinister; we just decided to end it, rather than keep on making stuff.'
-              },
-              {
-                id: '2_1',
-                img:
-                  'Which is why Bitcoin is an excellent idea. It fulfills the needs of the complex system, not because it is a cryptocurrency, but precisely because it has no owner, no authority that can decide on its fate. It is owned by the crowd, its users. And it has now a track record of several years, enough for it to be an animal in its own right.'
               },
               {
                 id: '3_1',
