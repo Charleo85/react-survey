@@ -13,30 +13,29 @@ export const fetchData = (callback, fail) =>
 export const submitResponse = (data, callback, fail) =>
   fetch(url + '/submit', {
     body: JSON.stringify(data),
-    headers: {'content-type': 'application/json'},
+    headers: { 'content-type': 'application/json' },
     method: 'POST'
   })
-  .then(response => {
-    if (response.status === 200) {
-      return response.json();
-    } else {
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        fail();
+      }
+    })
+    .then(data => {
+      if (data.status === 0) {
+        callback(data.mTurkCode);
+      } else {
+        fail(data.msg);
+      }
+    })
+    .catch(error => {
+      console.log(error);
       fail();
-    }
-  })
-  .then(data => {
-    if (data.status === 'success') {
-      callback(data.mTurkCode);
-    } else {
-      fail();
-    }
-  })
-  .catch(error => {
-    console.log(error);
-    fail();
-  });
+    });
 
-
-const fakeResponse = ()=>{
+const fakeResponse = () => {
   return [
     [
       { id: '1_0', img: '1_0.png' },
@@ -67,4 +66,4 @@ const fakeResponse = ()=>{
       }
     ]
   ];
-}
+};

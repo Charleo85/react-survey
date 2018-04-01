@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Instruction from './instruction.js';
-import {fetchData} from './action.js'
+import { fetchData } from './action.js';
 
 import Fade from 'material-ui/transitions/Fade';
 import { CircularProgress } from 'material-ui/Progress';
@@ -22,9 +22,11 @@ class App extends Component {
   }
   componentDidMount() {
     fetchData(
-      (data)=>this.setState({question: data}),
-      (error)=>{console.log(error)}
-    )
+      data => this.setState({ question: data }),
+      error => {
+        console.log(error);
+      }
+    );
   }
   render() {
     // const { classes } = this.props;
@@ -33,11 +35,13 @@ class App extends Component {
       <div className="App">
         <Instruction />
         {surveyLoadSucceed ? (
-          <Survey datas={this.state.question} />
-        ):(
-          <Fade in={!surveyLoadSucceed}
-          style={{ transitionDelay: surveyLoadSucceed ? '0ms' : '800ms' }}
-          unmountOnExit>
+          <Survey datas={this.state.question} workerid={'123'} />
+        ) : (
+          <Fade
+            in={!surveyLoadSucceed}
+            style={{ transitionDelay: surveyLoadSucceed ? '0ms' : '800ms' }}
+            unmountOnExit
+          >
             <CircularProgress />
           </Fade>
         )}

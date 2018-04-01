@@ -57,7 +57,7 @@ class Survey extends Component {
       numSelected: 0,
       pageID: 0,
       onReasoning: false,
-      mTurkCode: ''
+      msg: ''
     };
   }
 
@@ -70,15 +70,19 @@ class Survey extends Component {
           pageID: 2
         })
       );
-      const success = mTurkCode =>
+      const success = msg =>
         this.setState(prevState =>
-          Object.assign(prevState, { submitProgress: 2, mTurkCode })
+          Object.assign(prevState, { submitProgress: 2, msg })
         );
-      const fail = () =>
+      const fail = msg =>
         this.setState(prevState =>
-          Object.assign(prevState, { submitProgress: 3 })
+          Object.assign(prevState, { submitProgress: 3, msg })
         );
-      submitResponse({ data: this.state.selected }, success, fail);
+      submitResponse(
+        { data: this.state.selected, workerid: this.props.workerid },
+        success,
+        fail
+      );
       //submit selected
     } else if (!this.state.onReasoning) {
       this.setState(prevState =>
@@ -102,7 +106,12 @@ class Survey extends Component {
 
     const pageID = this.state.pageID;
     this.setState(prevState => {
-      if ( (has(prevState, ['selected', pageID, data, 'topic']) + has(prevState, ['selected', pageID, data, 'text']) + has(prevState, ['selected', pageID, data, 'title'])) === 2) {
+      if (
+        has(prevState, ['selected', pageID, data, 'topic']) +
+          has(prevState, ['selected', pageID, data, 'text']) +
+          has(prevState, ['selected', pageID, data, 'title']) ===
+        2
+      ) {
         set(prevState, 'numSelected', prevState.numSelected + 1);
       }
       set(prevState, ['selected', pageID, data, type], choice);
@@ -129,7 +138,9 @@ class Survey extends Component {
   render() {
     const { classes } = this.props;
     const pageID = this.state.pageID;
-    const selectable = this.props.datas[pageID] ? (this.state.numSelected < this.props.datas[pageID].length) : false;
+    const selectable = this.props.datas[pageID]
+      ? this.state.numSelected < this.props.datas[pageID].length
+      : false;
 
     const inSubmissionPage = pageID >= 1;
     const submissionSent = this.state.submitProgress === 1;
@@ -151,17 +162,13 @@ class Survey extends Component {
         case 2:
           return (
             <h1 className="App-title">
-              {'Success!   MTurk Code: ' + this.state.mTurkCode}
+              {'Success!   MTurk Code: ' + this.state.msg}
               <br />
               {'Thanks for helping us on this survey!'}
             </h1>
           );
         case 3:
-          return (
-            <h1 className="App-title">
-              {'Oops please try submit the survey again'}
-            </h1>
-          );
+          return <h1 className="App-title">{'Oop...' + this.state.msg}</h1>;
         default:
           return null;
       }
