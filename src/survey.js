@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import Choice from './choice.js';
+import { ImgChoiceType, TextChoiceType } from './choice.js';
 import Button from 'material-ui/Button';
 import Fade from 'material-ui/transitions/Fade';
 import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { set, reduce } from 'lodash';
+import { has, get, set, reduce } from 'lodash';
+import { submitResponse } from './action.js';
 
 const styles = theme => ({
   instruction: {
@@ -22,7 +23,7 @@ const styles = theme => ({
     marginBottom: 25
   },
   placeholder: {
-    marginTop: 20,
+    marginTop: 50,
     height: 80
   }
 });
@@ -35,7 +36,7 @@ const prepareSubmission = obj =>
         reduce(
           value,
           (result, val) => {
-            result[val.id] = false;
+            result[val.id] = null;
             return result;
           },
           {}
@@ -54,23 +55,38 @@ class Survey extends Component {
       submitProgress: 0,
       selected: prepareSubmission(props.datas),
       numSelected: 0,
-      pageID: 0
+      pageID: 0,
+      onReasoning: false,
+      mTurkCode: ''
     };
   }
 
   buttonAction() {
-    if (this.state.pageID === 1) {
+    if (this.state.pageID >= 1) {
       this.setState(prevState =>
-        Object.assign(prevState, { numSelected: 0, submitProgress: 1 })
+        Object.assign(prevState, {
+          numSelected: 0,
+          submitProgress: 1,
+          pageID: 2
+        })
       );
-      //submit selected
-      setTimeout(() => {
+      const success = mTurkCode =>
         this.setState(prevState =>
-          Object.assign(prevState, {
-            submitProgress: 2
-          })
+          Object.assign(prevState, { submitProgress: 2, mTurkCode })
         );
-      }, 3000);
+      const fail = () =>
+        this.setState(prevState =>
+          Object.assign(prevState, { submitProgress: 3 })
+        );
+      submitResponse({ data: this.state.selected }, success, fail);
+      //submit selected
+    } else if (!this.state.onReasoning) {
+      this.setState(prevState =>
+        Object.assign(prevState, {
+          numSelected: 0,
+          onReasoning: true
+        })
+      );
     } else {
       this.setState(prevState =>
         Object.assign(prevState, {
@@ -81,89 +97,122 @@ class Survey extends Component {
     }
   }
 
-  selectAction = data => () => {
-    // console.log(data, this.state.selected);
-    const selectionCap = this.props.needSelected[this.state.pageID];
-    const selectable = this.state.numSelected < selectionCap;
-    const curSelected = this.state.selected[this.state.pageID];
-    if (curSelected[data]) {
-      this.setState(prevState => {
-        set(prevState, ['selected', this.state.pageID, data], false);
-        set(prevState, 'numSelected', prevState.numSelected - 1);
-        return prevState;
-      });
-    } else {
-      if (selectable) {
-        this.setState(prevState => {
-          set(prevState, ['selected', this.state.pageID, data], true);
-          set(prevState, 'numSelected', prevState.numSelected + 1);
-          return prevState;
-        });
+  reasoningAction = data => (type, choice) => {
+    console.log(data, this.state.selected);
+
+    const pageID = this.state.pageID;
+    this.setState(prevState => {
+      if ( (has(prevState, ['selected', pageID, data, 'topic']) + has(prevState, ['selected', pageID, data, 'text']) + has(prevState, ['selected', pageID, data, 'title'])) === 2) {
+        set(prevState, 'numSelected', prevState.numSelected + 1);
       }
-    }
+      set(prevState, ['selected', pageID, data, type], choice);
+
+      return prevState;
+    });
+  };
+
+  selectAction = data => choice => {
+    console.log(data, this.state.selected);
+
+    const pageID = this.state.pageID;
+    const result = get(this.state, ['selected', pageID, data, 'choice']);
+
+    this.setState(prevState => {
+      if (result == null) {
+        set(prevState, 'numSelected', prevState.numSelected + 1);
+      }
+      set(prevState, ['selected', pageID, data, 'choice'], choice);
+      return prevState;
+    });
   };
 
   render() {
     const { classes } = this.props;
     const pageID = this.state.pageID;
-    const selectionCap = this.props.needSelected[pageID];
-    const selectable = this.state.numSelected < selectionCap;
-    const dataOnPage = this.props.datas[pageID];
+    const selectable = this.props.datas[pageID] ? (this.state.numSelected < this.props.datas[pageID].length) : false;
 
-    const inSubmissionPage = pageID === 1;
-    const inSurvey = this.state.submitProgress === 0;
+    const inSubmissionPage = pageID >= 1;
+    const submissionSent = this.state.submitProgress === 1;
     const submissionSucceed = this.state.submitProgress === 2;
     const canRetry = this.state.submitProgress === 3;
 
+    const renderSubmissionState = submitProgress => {
+      switch (submitProgress) {
+        case 1:
+          return (
+            <Fade
+              in={!submissionSucceed}
+              style={{ transitionDelay: submissionSucceed ? '0ms' : '800ms' }}
+              unmountOnExit
+            >
+              <CircularProgress />
+            </Fade>
+          );
+        case 2:
+          return (
+            <h1 className="App-title">
+              {'Success!   MTurk Code: ' + this.state.mTurkCode}
+              <br />
+              {'Thanks for helping us on this survey!'}
+            </h1>
+          );
+        case 3:
+          return (
+            <h1 className="App-title">
+              {'Oops please try submit the survey again'}
+            </h1>
+          );
+        default:
+          return null;
+      }
+    };
+
+    const conditionalRendering = pageID => {
+      switch (pageID) {
+        case 0:
+          return (
+            <div>
+              {this.props.datas[0].map(data => (
+                <ImgChoiceType
+                  onReasoning={this.state.onReasoning}
+                  data={data.img}
+                  key={`${pageID}.${data.id}`}
+                  onClick={this.selectAction(data.id)}
+                  reasoning={this.reasoningAction(data.id)}
+                />
+              ))}
+            </div>
+          );
+        case 1:
+          return (
+            <div>
+              {this.props.datas[1].map(data => (
+                <TextChoiceType
+                  data={data.content}
+                  key={`${pageID}.${data.id}`}
+                  onClick={this.selectAction(data.id)}
+                />
+              ))}
+            </div>
+          );
+        case 2:
+          return (
+            <div className={classes.placeholder}>
+              {renderSubmissionState(this.state.submitProgress)}
+            </div>
+          );
+        default:
+          return null;
+      }
+    };
+
     return (
       <div>
-        {/* {inSurvey && (
-          <Typography component="h1" className={classes.instruction}>
-            {inSubmissionPage
-              ? `Select the ${selectionCap} article decriptions you have seen in the last page`
-              : `Select exactly ${selectionCap} articles you want to read mostly`}
-          </Typography>
-        )} */}
-        {inSurvey ? (
-          dataOnPage.map(data => (
-            <Choice
-              selectable={selectable}
-              isMedia={!inSubmissionPage}
-              data={data.img}
-              key={`${pageID}.${data.id}`}
-              onClick={this.selectAction(data.id)}
-            />
-          ))
-        ) : (
-          <div className={classes.placeholder}>
-            {submissionSucceed ? (
-              <div>
-                <Typography variant="headline">{'Success!   MTurk Code: 123456'}</Typography>
-                <h1 className="App-title">Thanks for helping us on this survey!</h1>
-              </div>
-            ) : (
-              !canRetry && (
-                <Fade
-                  in={!submissionSucceed}
-                  style={{
-                    transitionDelay: !submissionSucceed ? '800ms' : '0ms'
-                  }}
-                  unmountOnExit
-                >
-                  <CircularProgress />
-                </Fade>
-              )
-            )}
-          </div>
-        )}
-        {inSurvey && (
-          <Typography className={classes.instruction}>
-            {'You have selected ' + this.state.numSelected}
-          </Typography>
-        )}
+        {conditionalRendering(pageID)}
         <Button
           size="large"
-          disabled={selectable && !canRetry}
+          disabled={selectable || submissionSucceed || submissionSent}
+          variant="raised"
           color="primary"
           onClick={this.buttonAction.bind(this)}
           className={classes.button}

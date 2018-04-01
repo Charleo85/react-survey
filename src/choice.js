@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import Checkbox from 'material-ui/Checkbox';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Radio from 'material-ui/Radio';
 import green from 'material-ui/colors/green';
+import Button from 'material-ui/Button';
 
-const styles = {
+const styles = theme => ({
   card: {
     maxWidth: 480,
     marginLeft: 'auto',
@@ -15,77 +15,184 @@ const styles = {
     marginBottom: 8
   },
   checked: {
-    color: green[500],
+    color: green[500]
   },
   media: {
     height: 200
+  },
+  actionBar: {
+    display: 'block'
+  },
+  actionSec: {
+    display: 'block'
+  },
+  question: {
+    marginBottom: '0'
+  },
+  selectableLabel: {
+    padding: '2px 8px',
+    minWidth: '32px'
   }
-};
+});
 
-class Choice extends Component {
+class ImgChoice extends Component {
   constructor(props) {
     super();
-    this.state = { isChosen: null };
+    this.state = {
+      isChosen: null,
+      titlePreference: -1,
+      textPreference: -1,
+      topicPreference: -1
+    };
   }
 
-  selectAction = (interested) => () => {
-    // console.log("clicked choice");
-    //onChange={this.selectAction.bind(this)}
+  selectAction = interested => () => {
+    this.props.onClick(interested);
+    this.setState(prevState => {
+      return { isChosen: interested };
+    });
+  };
 
-    // if (this.props.selectable || this.state.isChosen) {
-      if (this.state.isChosen == null) this.props.onClick();
-      this.setState(prevState => {
-        return { isChosen: interested };
-      });
-    // }
-  }
+  chooseAction = (type, idx) => () => {
+    this.props.reasoning(type, idx);
+    this.setState(prevState => {
+      return { [`${type}Preference`]: idx };
+    });
+  };
 
   render() {
-    const { classes, selectable, data, isMedia } = this.props;
+    const { classes, data, onReasoning } = this.props;
+
+    const renderReasoning = type => (
+      <div className={classes.actionBar}>
+        <Typography
+          paragraph
+          align="left"
+          variant="body1"
+          component="p"
+          className={classes.question}
+        >
+          {'On scale of 0-4, how is your preference affected by this ' +
+            type +
+            '?'}
+        </Typography>
+        {['0', '1', '2', '3', '4'].map((val, idx) => (
+          <div style={{ display: 'inline' }} key={`${type}.${idx}`}>
+            <Button
+              onClick={this.chooseAction(type, idx)}
+              className={classes.selectableLabel}
+            >
+              <Radio
+                checked={this.state[`${type}Preference`] === idx}
+                value={val}
+                name={val}
+              />
+              {val}
+            </Button>
+          </div>
+        ))}
+      </div>
+    );
+
     return (
-      <Card raised={this.state.isChosen != null} className={classes.card} >
-        {isMedia ?
-        <CardMedia
-          className={classes.media}
-          image={require('./img/' + data)}
-        />
-        :
-        <CardContent>
-          <Typography variant="subheading" align="left" component="p">
-            {data}
-          </Typography>
-        </CardContent>}
-        <CardActions>
-          <Radio
-            checked={this.state.isChosen === '1'}
-            onChange={this.selectAction('1')}
-            value='1'
-            name="yes"
-            label="yes"
-            classes={{
-              checked: classes.checked,
-            }}
-          />
-          <a onClick={this.selectAction('1')}>{isMedia ? "Interested" : "Appeared"}</a>
-          <Radio
-            checked={this.state.isChosen === '0'}
-            onChange={this.selectAction('0')}
-            value='0'
-            name="no"
-            label="no"
-          />
-          <a onClick={this.selectAction('0')}>{isMedia ? "Not Interested" : "Not Appeared"}</a>
+      <Card raised={this.state.isChosen != null} className={classes.card}>
+        <CardMedia className={classes.media} image={'/static/' + data+'.png'} />
+        <CardActions className={classes.actionSec}>
+          <div className={classes.actionBar}>
+            <Button
+              onClick={this.selectAction(1)}
+              disabled={onReasoning}
+              className={classes.selectableLabel}
+            >
+              <Radio
+                disabled={onReasoning}
+                checked={this.state.isChosen === 1}
+                value="1"
+                name="yes"
+                label="yes"
+                className={classes.checked}
+              />
+              {'Interested'}
+            </Button>
+            <Button
+              onClick={this.selectAction(0)}
+              disabled={onReasoning}
+              className={classes.selectableLabel}
+            >
+              <Radio
+                disabled={onReasoning}
+                checked={this.state.isChosen === 0}
+                value="0"
+                name="no"
+                label="no"
+              />
+              {'Not Interested'}
+            </Button>
+          </div>
+          {onReasoning && renderReasoning('title')}
+          {onReasoning && renderReasoning('text')}
+          {onReasoning && renderReasoning('topic')}
         </CardActions>
       </Card>
     );
   }
 }
-{/* <Checkbox
-  checked={this.state.isChosen}
-  disabled={!selectable && !this.state.isChosen}
 
-  value="selected"
-  color="primary"
-/>
-<p>{data.img}</p> */}
-export default withStyles(styles)(Choice);
+class TextChoice extends Component {
+  constructor(props) {
+    super();
+    this.state = { isChosen: null };
+  }
+
+  selectAction = interested => () => {
+    this.props.onClick(interested);
+    this.setState(prevState => {
+      return { isChosen: interested };
+    });
+  };
+
+  render() {
+    const { classes, data } = this.props;
+    return (
+      <Card raised={this.state.isChosen != null} className={classes.card}>
+        <CardContent>
+          <Typography variant="subheading" align="left" component="p">
+            {data}
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.actionSec}>
+          <div className={classes.actionBar}>
+            <Button
+              onClick={this.selectAction(1)}
+              className={classes.selectableLabel}
+            >
+              <Radio
+                checked={this.state.isChosen === 1}
+                value="1"
+                name="yes"
+                label="yes"
+                className={classes.checked}
+              />
+              {'Appeared'}
+            </Button>
+            <Button
+              onClick={this.selectAction(0)}
+              className={classes.selectableLabel}
+            >
+              <Radio
+                checked={this.state.isChosen === 0}
+                value="0"
+                name="no"
+                label="no"
+              />
+              {'Not Appeared'}
+            </Button>
+          </div>
+        </CardActions>
+      </Card>
+    );
+  }
+}
+
+export const ImgChoiceType = withStyles(styles)(ImgChoice);
+export const TextChoiceType = withStyles(styles)(TextChoice);

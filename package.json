@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "async": "^2.6.0",
     "babel-eslint": "^8.2.2",
-    "cheerio": "^1.0.0-rc.2",
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "gh-pages": "^1.1.0",
     "lodash": "^4.17.5",
@@ -14,20 +13,20 @@
     "npm": "^5.7.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
-    "webshot": "^0.18.0"
+    "react-scripts": "1.1.1"
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "npm run predeploy && gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "start-server": "node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint src/**.js --fix",
-    "prettier": "prettier --single-quote --write 'src/**.js' ",
-    "snap": "node html2png/generator.js"
+    "prettier": "prettier --single-quote --write '{src, html2png}/**/*.js' ",
+    "snap": "node html2png/generator.js",
+    "initdb": "node html2png/png2db.js"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
@@ -39,7 +38,11 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "webshot": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "async": "^2.6.0"
   },
-  "homepage": "https://charleo85.github.io/react-survey/"
+  "homepage": "https://charleo85.github.io/react-survey/",
+  "proxy": "http://localhost:8888"
 }

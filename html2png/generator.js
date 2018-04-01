@@ -38,7 +38,7 @@ let getCheerio = new Promise((resolve, reject) => {
 const output_img_dir = './html2png/output/img/'
 const output_html_dir = './html2png/output/html/'
 
-const label_filname = './html2png/input/test.json'
+const label_filname = './html2png/input/selected.json'
 const waterfall = require('async/waterfall');
 const everySeries = require('async/everySeries');
 var idx = 0
