@@ -6,6 +6,9 @@ const MongoClient = require('mongodb').MongoClient;
 const sampleSize = require('lodash/sampleSize');
 const shuffle = require('lodash/shuffle');
 const has = require('lodash/has');
+const path = require('path');
+const https = require('https');
+const fs = require('fs');
 
 const questionsFrom = (samples) => {
   q1 = [];
@@ -107,4 +110,19 @@ app.post('/submit', jsonParser, (req, res) => {
 
 })
 app.use('/static', express.static('static'));
-app.listen(8888, () => console.log('Server listening on port 8888!'))
+
+app.use('/', express.static(path.join(__dirname, 'build')))
+
+
+const PATH_TO_CERT_CHAIN = '/etc/ssl/certs/cs.virginia.edu.interm.cer'
+const PATH_TO_CERT = '/etc/ssl/certs/cs.virginia.edu.cert.cer'
+const PATH_TO_KEY = '/etc/ssl/private/cs.virginia.edu.key'
+
+const options = {
+  cert: fs.readFileSync(PATH_TO_CERT),
+  key: fs.readFileSync(PATH_TO_KEY)
+};
+
+const server = https.createServer(options, app);
+
+server.listen(8088, () => console.log('Server listening on port 8088!'))
