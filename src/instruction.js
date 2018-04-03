@@ -101,7 +101,7 @@ class Instruction extends Component {
               text snippet of an article, like the following example:
               <img
                 src={require('./img/example.jpg')}
-                style={{ maxWidth: '500px', display: 'block' }}
+                style={{ width: '100%', maxWidth: '500px', display: 'block' }}
               />
               - Make sure you read through each of them carefully and you will
               need to roughly remember the content of these snippets to answer

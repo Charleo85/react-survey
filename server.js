@@ -113,7 +113,6 @@ app.use('/static', express.static('static'));
 
 app.use('/', express.static(path.join(__dirname, 'build')))
 
-
 const PATH_TO_CERT_CHAIN = '/etc/ssl/certs/cs.virginia.edu.interm.cer'
 const PATH_TO_CERT = '/etc/ssl/certs/cs.virginia.edu.cert.cer'
 const PATH_TO_KEY = '/etc/ssl/private/cs.virginia.edu.key'

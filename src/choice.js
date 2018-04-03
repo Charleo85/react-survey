@@ -18,7 +18,7 @@ const styles = theme => ({
     color: green[500]
   },
   media: {
-    height: 200
+    width: '100%'
   },
   actionBar: {
     display: 'block'
@@ -30,7 +30,7 @@ const styles = theme => ({
     marginBottom: '0'
   },
   selectableLabel: {
-    padding: '2px 8px',
+    padding: '2px 6px',
     minWidth: '32px'
   }
 });
@@ -96,10 +96,10 @@ class ImgChoice extends Component {
 
     return (
       <Card raised={this.state.isChosen != null} className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={'/static/' + data + '.png'}
-        />
+        <CardMedia >
+          <img src={'/static/' + data + '.png'} className={classes.media}/>
+        </CardMedia>
+
         <CardActions className={classes.actionSec}>
           <div className={classes.actionBar}>
             <Button
