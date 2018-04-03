@@ -72,7 +72,7 @@ class ImgChoice extends Component {
           component="p"
           className={classes.question}
         >
-          {'On scale of 0-4, how is your preference affected by this ' +
+          {'On scale of 0-4, how is your choice affected by this ' +
             type +
             '?'}
         </Typography>
