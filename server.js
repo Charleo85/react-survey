@@ -52,7 +52,7 @@ app.get('/loadquestions', (req, res) => {
   MongoClient.connect('mongodb://localhost:27017', (err, client) => {
     if (err) throw err;
 
-    client.db('highlight-survey').collection('images').find({}).toArray( (err, result) => {
+    client.db('highlight-survey').collection('images').find({id: { $lt: 10 }}).toArray( (err, result) => {
       if (err) throw err;
       samples = sampleSize(result, 7);
       res.json(questionsFrom(samples));
