@@ -37,7 +37,7 @@ fs.readFile(label_filname, (err, json) => {
             ...val,
             firstSentenceImg: hashImg(key+'_0'),
             topHighlightImg: hashImg(key+'_1'),
-            id: key
+            id: parseInt(key)
           })
           return res;
         }, [])
