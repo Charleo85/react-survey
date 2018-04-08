@@ -183,7 +183,7 @@ class Survey extends Component {
         case 3:
           return (
             <h1 className="App-title">
-              {'Oop...' + this.state.msg}
+              {'You did not follow the instruction and your response is not valid. We are sorry that we cannot pay you:('}
             </h1>
           );
         default:
