@@ -30,7 +30,7 @@ const questionsFrom = (samples) => {
         id: `${s.id}_1`,
         img: s.topHighlightImg
       })
-      if (q2.length < 3){
+      if (q2.length < 2){
         q2.push({
           id: `${s.id}_1`,
           content: s.topHighlight
