@@ -72,9 +72,7 @@ class ImgChoice extends Component {
           component="p"
           className={classes.question}
         >
-          {'On scale of 0-4, how is your choice affected by this ' +
-            type +
-            '?'}
+          {'On scale of 0-4, how is your choice affected by this ' + type + '?'}
         </Typography>
         {['0', '1', '2', '3', '4'].map((val, idx) => (
           <div style={{ display: 'inline' }} key={`${type}.${idx}`}>
@@ -96,8 +94,8 @@ class ImgChoice extends Component {
 
     return (
       <Card raised={this.state.isChosen != null} className={classes.card}>
-        <CardMedia >
-          <img src={'/static/' + data + '.png'} className={classes.media}/>
+        <CardMedia>
+          <img src={'/static/' + data + '.png'} className={classes.media} />
         </CardMedia>
 
         <CardActions className={classes.actionSec}>

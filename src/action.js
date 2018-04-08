@@ -16,21 +16,21 @@ export const submitResponse = (data, callback, fail) =>
     headers: { 'content-type': 'application/json' },
     method: 'POST'
   })
-  .then(response => {
-    if (response.status === 200) {
-      return response.json();
-    } else {
+    .then(response => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        fail();
+      }
+    })
+    .then(data => {
+      if (data.status === 0) {
+        callback(data.mTurkCode);
+      } else {
+        fail(data.msg);
+      }
+    })
+    .catch(error => {
+      console.log(error);
       fail();
-    }
-  })
-  .then(data => {
-    if (data.status === 0) {
-      callback(data.mTurkCode);
-    } else {
-      fail(data.msg);
-    }
-  })
-  .catch(error => {
-    console.log(error);
-    fail();
-  });
+    });

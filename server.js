@@ -81,19 +81,21 @@ const saveResponse = (response, completionid, valid, success, fail)=>{
     if (err) throw err
 
     client.db('highlight-survey').collection('responses').insertOne(
-      {answer: response.data, workerid: response.workerid, completionid, valid}
+      {answer: response.data, workerid: response.workerid, completionid, valid, timestamp: Date.Now()}
     )
     .then(() => {
       if (valid) success();
-      else fail('answer not valid, you need to start over')();
+      else fail();
     })
-    .catch(() => fail('error saving your reponse, please try resubmit')());
+    .catch(() => fail());
     client.close();
   })
 }
 
+const S4 = () => (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+
 const generateCode = () => {
-  return '666666'
+  return S4() + S4();
 }
 
 app.post('/submit', jsonParser, (req, res) => {
@@ -102,9 +104,8 @@ app.post('/submit', jsonParser, (req, res) => {
       status: 0,
       mTurkCode
     })
-  const fail = (msg) => () => res.json({
+  const fail = () => res.json({
       status: 1,
-      msg
   })
   saveResponse(req.body, mTurkCode, validate(req.body), success, fail);
 

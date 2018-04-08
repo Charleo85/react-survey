@@ -25,13 +25,19 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3
   },
   instruction: {
-    fontSize: 'large',
-    color: '#000000',
-    fontWeight: 'bolder'
+    fontSize: 'medium',
+    color: '#111111'
   },
   steps: {
+    fontSize: 'medium',
+    color: '#333333'
+  },
+  highlight: {
     fontSize: 'large',
-    color: '#111111'
+    fontStyle: 'italic',
+    backgroundColor: 'transparent',
+    backgroundImage:
+      'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
   },
   root: theme.mixins.gutters({
     paddingTop: 16,
@@ -103,9 +109,11 @@ class Instruction extends Component {
                 src={require('./img/example.jpg')}
                 style={{ width: '100%', maxWidth: '500px', display: 'block' }}
               />
-              - Make sure you read through each of them carefully and you will
-              need to roughly remember the content of these snippets to answer
-              questions in the next page.
+              - Make sure you{' '}
+              <span className={classes.highlight}>read through</span> each of
+              them carefully and you will need to roughly{' '}
+              <span className={classes.highlight}>remember</span> the content of
+              these snippets to answer questions in the next page.
               <br />
               - Please select whether you will read this article or not, after
               reading its title and text snippet.
@@ -159,7 +167,9 @@ class Instruction extends Component {
               <br />
               - Please select whether the text snippet has appeared in Page 1 or
               not. If this text snippet appeared in the first page, please
-              select "Appeared". Otherwise, please select "Not Appeared".
+              select <span className={classes.highlight}>"Appeared"</span>.
+              Otherwise, please select{' '}
+              <span className={classes.highlight}>"Not Appeared"</span>.
               <br />
               - Each decision should be independent.
               <br />

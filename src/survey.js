@@ -7,6 +7,8 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { has, get, set, reduce } from 'lodash';
 import { submitResponse } from './action.js';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 
 const styles = theme => ({
   instruction: {
@@ -25,6 +27,13 @@ const styles = theme => ({
   placeholder: {
     marginTop: 50,
     height: 80
+  },
+  formControl: {
+    marginTop: 50,
+    marginBottom: 50,
+    maxWidth: 200,
+    display: 'flex',
+    margin: 'auto'
   }
 });
 
@@ -47,7 +56,7 @@ const prepareSubmission = obj =>
     []
   );
 
-//submitProgress 0: inital 1: sent 2:success 3:retry
+//submitProgress 0: initial 1: sent 2:success 3:retry
 class Survey extends Component {
   constructor(props) {
     super();
@@ -57,17 +66,18 @@ class Survey extends Component {
       numSelected: 0,
       pageID: 0,
       onReasoning: false,
-      msg: ''
+      msg: '',
+      workerid: '',
     };
   }
 
   buttonAction() {
-    if (this.state.pageID >= 1) {
+    if (this.state.pageID >= 2) {
       this.setState(prevState =>
         Object.assign(prevState, {
           numSelected: 0,
           submitProgress: 1,
-          pageID: 2
+          pageID: 3
         })
       );
       const success = msg =>
@@ -79,7 +89,7 @@ class Survey extends Component {
           Object.assign(prevState, { submitProgress: 3, msg })
         );
       submitResponse(
-        { data: this.state.selected, workerid: this.props.workerid },
+        { data: this.state.selected, workerid: this.state.workerid },
         success,
         fail
       );
@@ -121,7 +131,7 @@ class Survey extends Component {
   };
 
   selectAction = data => choice => {
-    console.log(data, this.state.selected);
+    // console.log(data, this.state.selected);
 
     const pageID = this.state.pageID;
     const result = get(this.state, ['selected', pageID, data, 'choice']);
@@ -135,14 +145,17 @@ class Survey extends Component {
     });
   };
 
+  handleChange = event => {
+    this.setState({ workerid: event.target.value });
+  };
+
   render() {
     const { classes } = this.props;
     const pageID = this.state.pageID;
     const selectable = this.props.datas[pageID]
       ? this.state.numSelected < this.props.datas[pageID].length
       : false;
-
-    const inSubmissionPage = pageID >= 1;
+    const inSubmissionPage = pageID >= 2;
     const submissionSent = this.state.submitProgress === 1;
     const submissionSucceed = this.state.submitProgress === 2;
     const canRetry = this.state.submitProgress === 3;
@@ -168,7 +181,11 @@ class Survey extends Component {
             </h1>
           );
         case 3:
-          return <h1 className="App-title">{'Oop...' + this.state.msg}</h1>;
+          return (
+            <h1 className="App-title">
+              {'Oop...' + this.state.msg}
+            </h1>
+          );
         default:
           return null;
       }
@@ -203,6 +220,19 @@ class Survey extends Component {
             </div>
           );
         case 2:
+          return (
+            <FormControl className={classes.formControl} aria-describedby="name-helper-text">
+              <InputLabel htmlFor="name-helper">MTURK Work ID</InputLabel>
+              <Input id="name-helper" value={this.state.workerid} onChange={this.handleChange} />
+              <FormHelperText id="name-helper-text" style={{cursor: 'pointer'}} onClick={()=>{window.open('worker.mturk.com', '_blank');}}>
+                Should be on the top of Amazon MTurk Dashboard
+              </FormHelperText>
+              <FormHelperText>
+                Enter your name if you are not a MTurk worker
+              </FormHelperText>
+            </FormControl>
+          );
+        case 3:
           return (
             <div className={classes.placeholder}>
               {renderSubmissionState(this.state.submitProgress)}
