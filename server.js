@@ -81,7 +81,7 @@ const saveResponse = (response, completionid, valid, success, fail)=>{
     if (err) throw err
 
     client.db('highlight-survey').collection('responses').insertOne(
-      {answer: response.data, workerid: response.workerid, completionid, valid, timestamp: Date.Now()}
+      {answer: response.data, workerid: response.workerid, completionid, valid, timestamp: Date.now()}
     )
     .then(() => {
       if (valid) success();
