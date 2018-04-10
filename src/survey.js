@@ -157,7 +157,7 @@ class Survey extends Component {
   render() {
     const { classes } = this.props;
     const pageID = this.state.pageID;
-    const selectable = false && this.props.datas[pageID]
+    const selectable = this.props.datas[pageID]
       ? this.state.numSelected < this.props.datas[pageID].length
       : false;
     const inSubmissionPage = pageID >= 2;
