@@ -29,11 +29,16 @@ const styles = theme => ({
     height: 80
   },
   formControl: {
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 50,
     maxWidth: 200,
     display: 'flex',
     margin: 'auto'
+  },
+  formText:{
+    marginTop: 80,
+    fontSize: 'large',
+    fontStyle: 'italic',
   }
 });
 
@@ -152,7 +157,7 @@ class Survey extends Component {
   render() {
     const { classes } = this.props;
     const pageID = this.state.pageID;
-    const selectable = this.props.datas[pageID]
+    const selectable = false && this.props.datas[pageID]
       ? this.state.numSelected < this.props.datas[pageID].length
       : false;
     const inSubmissionPage = pageID >= 2;
@@ -221,16 +226,21 @@ class Survey extends Component {
           );
         case 2:
           return (
+            <div>
+              <Typography className={classes.formText} align="center" variant="body1">
+                NOTE: If you do not correctly enter your MTurk worker ID, we cannnot guarantee to pay you.
+              </Typography>
             <FormControl className={classes.formControl} aria-describedby="name-helper-text">
               <InputLabel htmlFor="name-helper">MTURK Work ID</InputLabel>
               <Input id="name-helper" value={this.state.workerid} onChange={this.handleChange} />
-              <FormHelperText id="name-helper-text" style={{cursor: 'pointer'}} onClick={()=>{window.open('worker.mturk.com', '_blank');}}>
+              <FormHelperText id="name-helper-text" style={{cursor: 'pointer'}} onClick={()=>{window.open('https://worker.mturk.com', '_blank');}}>
                 Should be on the top of Amazon MTurk Dashboard
               </FormHelperText>
               <FormHelperText>
                 Enter your name if you are not a MTurk worker
               </FormHelperText>
             </FormControl>
+          </div>
           );
         case 3:
           return (
