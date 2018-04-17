@@ -117,7 +117,7 @@ class Survey extends Component {
   }
 
   reasoningAction = data => (type, choice) => {
-    console.log(data, this.state.selected);
+    // console.log(data, this.state.selected);
 
     const pageID = this.state.pageID;
     this.setState(prevState => {
@@ -125,7 +125,7 @@ class Survey extends Component {
         has(prevState, ['selected', pageID, data, 'topic']) +
           has(prevState, ['selected', pageID, data, 'text']) +
           has(prevState, ['selected', pageID, data, 'title']) ===
-        2
+        2 && !has(prevState, ['selected', pageID, data, type])
       ) {
         set(prevState, 'numSelected', prevState.numSelected + 1);
       }

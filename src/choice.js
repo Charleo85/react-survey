@@ -94,9 +94,9 @@ class ImgChoice extends Component {
 
     return (
       <Card raised={this.state.isChosen != null} className={classes.card}>
-        <CardMedia>
-          <img src={'/static/' + data + '.png'} className={classes.media} />
-        </CardMedia>
+        <div>
+          <img src={'/static/' + data + '.png'} alt={'question image'} className={classes.media} />
+        </div>
 
         <CardActions className={classes.actionSec}>
           <div className={classes.actionBar}>
