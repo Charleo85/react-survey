@@ -292,7 +292,7 @@ class Survey extends Component {
     const inSubmissionPage = pageID >= 2;
     const submissionSent = this.state.submitProgress === 1;
     const submissionSucceed = this.state.submitProgress === 2;
-    const canRetry = this.state.submitProgress === 3;
+    const failed = this.state.submitProgress === 3;
 
     const renderSubmissionState = submitProgress => {
       switch (submitProgress) {
@@ -384,13 +384,13 @@ class Survey extends Component {
         {conditionalRendering(pageID)}
         <Button
           size="large"
-          disabled={selectable || submissionSucceed || submissionSent}
+          disabled={selectable || submissionSucceed || submissionSent || failed}
           variant="raised"
           color="primary"
           onClick={this.buttonAction.bind(this)}
           className={classes.button}
         >
-          {inSubmissionPage ? (canRetry ? 'Resubmit' : 'Submit') : 'Next'}
+          {inSubmissionPage ? 'Submit' : 'Next'}
         </Button>
       </div>
     );

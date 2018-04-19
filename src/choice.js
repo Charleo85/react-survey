@@ -6,6 +6,7 @@ import Radio from 'material-ui/Radio';
 import green from 'material-ui/colors/green';
 import Button from 'material-ui/Button';
 import Divider from 'material-ui/Divider';
+import ButtonBase from 'material-ui/ButtonBase';
 
 const styles = theme => ({
   card: {
@@ -44,10 +45,23 @@ const styles = theme => ({
     padding: '2px 6px',
     minWidth: '32px'
   },
+  multiSelectableLabel: {
+    padding: '2px 6px',
+    minWidth: '32px',
+    flexDirection: 'column'
+  },
   quotation: {
      fontFamily: 'Lucida Grande'
   }
 });
+
+const scaleDescription = [
+  'Not at all',
+  'slightly',
+  'somewhat',
+  'very',
+  'Extremely'
+]
 
 class ImgChoice extends Component {
   constructor(props) {
@@ -88,19 +102,20 @@ class ImgChoice extends Component {
         >
           To which extent did the <span className={classes.highlight}>{type}</span> influence your choice?
         </Typography>
-        {['0', '1', '2', '3', '4'].map((val, idx) => (
+        {scaleDescription.map((val, idx) => (
           <div style={{ display: 'inline' }} key={`${type}.${idx}`}>
-            <Button
+            <ButtonBase
               onClick={this.chooseAction(type, idx)}
-              className={classes.selectableLabel}
+              className={classes.multiSelectableLabel}
             >
               <Radio
                 checked={this.state[`${type}Preference`] === idx}
                 value={val}
                 name={val}
+                style={{display:'flex'}}
               />
-              {val}
-            </Button>
+              <div style={{display:'flex'}}>{val}</div>
+            </ButtonBase>
           </div>
         ))}
       </div>
@@ -195,7 +210,7 @@ class TextChoice extends Component {
                 label="yes"
                 className={classes.checked}
               />
-              {'Appeared'}
+              {'Yes'}
             </Button>
             <Button
               onClick={this.selectAction(0)}
@@ -207,7 +222,7 @@ class TextChoice extends Component {
                 name="no"
                 label="no"
               />
-              {'Not Appeared'}
+              {'No'}
             </Button>
           </div>
         </CardActions>
