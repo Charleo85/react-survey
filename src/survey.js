@@ -33,7 +33,8 @@ const styles = theme => ({
     margin: 'auto'
   },
   formText:{
-    marginTop: 80,
+    marginTop: 10,
+    marginBottom: 10,
     fontSize: 'large',
     fontStyle: 'italic',
   },
@@ -89,7 +90,7 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            Page 1. Each question consists of a block with the title and a
+            Step 1. Each question consists of a block with the title and a
             text snippet of an article, like the following example:
             <img
               src={require('./img/example.jpg')}
@@ -122,7 +123,7 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            - Please select to what extent your choice of whether to read the
+            Step 2. Please select to what extent your choice of whether to read the
             article or not is affected by the article title, text snippet as
             well as the article topic you infer from the text.
             <br />
@@ -148,7 +149,7 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            Page 2. Each question consists of a block with a text snippet from
+            Step 3. Each question consists of a block with a text snippet from
             an article block which may or may not appear in Page 1
             <br />
             - Please select whether the text snippet has appeared in Page 1 or
@@ -162,6 +163,23 @@ const getStepContent = (classes, step) => {
             - Please click "SUBMIT" in the bottom of the page to submit your
             results.
           </Typography>
+        );
+      case 3:
+        return (
+          <div>
+            <Typography
+              paragraph
+              align="left"
+              variant="body2"
+              component="p"
+              className={classes.steps}
+            >
+              You should be able to find your MTurk worker ID on the top of the Amazon MTurk Dashboard. You may just enter your name if you are not a MTurk worker
+            </Typography>
+            <Typography className={classes.formText} align="center" variant="body1">
+              NOTE: If you do not correctly enter your MTurk worker ID, we cannnot guarantee to pay you.
+            </Typography>
+          </div>
         );
       default:
         return null;
@@ -224,6 +242,7 @@ class Survey extends Component {
         })
       );
     }
+    window.scrollTo(0,0);
   }
 
   reasoningAction = data => (type, choice) => {
@@ -337,17 +356,11 @@ class Survey extends Component {
         case 2:
           return (
             <div>
-              <Typography className={classes.formText} align="center" variant="body1">
-                NOTE: If you do not correctly enter your MTurk worker ID, we cannnot guarantee to pay you.
-              </Typography>
             <FormControl className={classes.formControl} aria-describedby="name-helper-text">
               <InputLabel htmlFor="name-helper">MTURK Work ID</InputLabel>
               <Input id="name-helper" value={this.state.workerid} onChange={this.handleChange} />
               <FormHelperText id="name-helper-text" style={{cursor: 'pointer'}} onClick={()=>{window.open('https://worker.mturk.com', '_blank');}}>
-                Should be on the top of Amazon MTurk Dashboard
-              </FormHelperText>
-              <FormHelperText>
-                Enter your name if you are not a MTurk worker
+                Here is a shortcut to your Amazon MTurk Dashboard
               </FormHelperText>
             </FormControl>
           </div>

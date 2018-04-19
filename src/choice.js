@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Radio from 'material-ui/Radio';
 import green from 'material-ui/colors/green';
 import Button from 'material-ui/Button';
+import Divider from 'material-ui/Divider';
 
 const styles = theme => ({
   card: {
@@ -27,11 +28,24 @@ const styles = theme => ({
     display: 'block'
   },
   question: {
+    fontWeight: '500',
+    fontSize: 'large',
     marginBottom: '0'
+  },
+  highlight: {
+    fontSize: 'large',
+    color: '#42A5F5'
+    // fontStyle: 'italic',
+    // backgroundColor: 'transparent',
+    // backgroundImage:
+    //   'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
   },
   selectableLabel: {
     padding: '2px 6px',
     minWidth: '32px'
+  },
+  quotation: {
+     fontFamily: 'Lucida Grande'
   }
 });
 
@@ -72,7 +86,7 @@ class ImgChoice extends Component {
           component="p"
           className={classes.question}
         >
-          {'On scale of 0-4, how is your choice affected by this ' + type + '?'}
+          To which extent did the <span className={classes.highlight}>{type}</span> influence your choice?
         </Typography>
         {['0', '1', '2', '3', '4'].map((val, idx) => (
           <div style={{ display: 'inline' }} key={`${type}.${idx}`}>
@@ -97,9 +111,12 @@ class ImgChoice extends Component {
         <div>
           <img src={'/static/' + data + '.png'} alt={'question image'} className={classes.media} />
         </div>
-
+        <Divider />
         <CardActions className={classes.actionSec}>
           <div className={classes.actionBar}>
+            <Typography paragraph align="left" variant="body1" component="p" className={classes.question}>
+              Will you read this article?
+            </Typography>
             <Button
               onClick={this.selectAction(1)}
               disabled={onReasoning}
@@ -113,7 +130,7 @@ class ImgChoice extends Component {
                 label="yes"
                 className={classes.checked}
               />
-              {'Interested'}
+              {'Yes'}
             </Button>
             <Button
               onClick={this.selectAction(0)}
@@ -127,7 +144,7 @@ class ImgChoice extends Component {
                 name="no"
                 label="no"
               />
-              {'Not Interested'}
+              {'No'}
             </Button>
           </div>
           {onReasoning && renderReasoning('title')}
@@ -157,12 +174,16 @@ class TextChoice extends Component {
     return (
       <Card raised={this.state.isChosen != null} className={classes.card}>
         <CardContent>
-          <Typography variant="subheading" align="left" component="p">
+          <Typography className={classes.quotation} variant="subheading" align="left" component="p">
             {data}
           </Typography>
         </CardContent>
+        <Divider />
         <CardActions className={classes.actionSec}>
           <div className={classes.actionBar}>
+            <Typography paragraph align="left" variant="body1" component="p" className={classes.question}>
+              Did this text snippet appear in Step 1?
+            </Typography>
             <Button
               onClick={this.selectAction(1)}
               className={classes.selectableLabel}

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Survey from './survey.js';
 import Instruction from './instruction.js';
 import { fetchData } from './action.js';
 
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
 import Fade from 'material-ui/transitions/Fade';
 import { CircularProgress } from 'material-ui/Progress';
 
