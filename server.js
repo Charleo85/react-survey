@@ -14,7 +14,7 @@ const questionsFrom = (samples) => {
   q1 = [];
   q2 = [];
   for (const s of samples){
-    if (q1.length < 3){
+    if (q1.length < 2){
         q1.push({
           id: `${s.id}_0`,
           img: s.firstSentenceImg
@@ -25,7 +25,7 @@ const questionsFrom = (samples) => {
             content: s.firstSentence
           })
         }
-    }else if (q1.length < 6){
+    }else if (q1.length < 4){
       q1.push({
         id: `${s.id}_1`,
         img: s.topHighlightImg
@@ -54,7 +54,7 @@ app.get('/loadquestions', (req, res) => {
 
     client.db('highlight-survey').collection('images').find({}).toArray( (err, result) => {
       if (err) throw err;
-      samples = sampleSize(result, 7);
+      samples = sampleSize(result, 5);
       res.json(questionsFrom(samples));
     });
     client.close();

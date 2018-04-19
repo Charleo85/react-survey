@@ -9,12 +9,9 @@ import { has, get, set, reduce } from 'lodash';
 import { submitResponse } from './action.js';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
+import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
-  instruction: {
-    fontSize: 'large',
-    margin: '20 20 0 0px'
-  },
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -39,7 +36,27 @@ const styles = theme => ({
     marginTop: 80,
     fontSize: 'large',
     fontStyle: 'italic',
-  }
+  },
+  highlight: {
+    fontSize: 'large',
+    fontStyle: 'italic',
+    backgroundColor: 'transparent',
+    backgroundImage:
+      'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
+  },
+  steps: {
+    fontSize: 'medium',
+    color: '#333333'
+  },
+  instruction: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: 800
+  })
 });
 
 const prepareSubmission = obj =>
@@ -61,6 +78,96 @@ const prepareSubmission = obj =>
     []
   );
 
+const getStepContent = (classes, step) => {
+    switch (step) {
+      case 0:
+        return (
+          <Typography
+            paragraph
+            align="left"
+            variant="body2"
+            component="p"
+            className={classes.steps}
+          >
+            Page 1. Each question consists of a block with the title and a
+            text snippet of an article, like the following example:
+            <img
+              src={require('./img/example.jpg')}
+              style={{ width: '100%', maxWidth: '500px', display: 'block' }}
+            />
+            - Make sure you{' '}
+            <span className={classes.highlight}>read through</span> each of
+            them carefully and you will need to roughly{' '}
+            <span className={classes.highlight}>remember</span> the content of
+            these snippets to answer questions in the next page.
+            <br />
+            - Please select whether you will read this article or not, after
+            reading its title and text snippet.
+            <br />
+            - If you will read the article, please select "Interested".
+            Otherwise, select "Not Interested".
+            <br />
+            - Each decision must be independent.
+            <br />
+            - Please click "Next" in the bottom of the page to finish the rest
+            questions on Page 1.
+          </Typography>
+        );
+      case 1:
+        return (
+          <Typography
+            paragraph
+            align="left"
+            variant="body2"
+            component="p"
+            className={classes.steps}
+          >
+            - Please select to what extent your choice of whether to read the
+            article or not is affected by the article title, text snippet as
+            well as the article topic you infer from the text.
+            <br />
+            - 0 represents for 'has not effect at all'
+            <br />
+            - 1 represents for 'has a little effect'
+            <br />
+            - 2 represents for 'is somewhat affected'
+            <br />
+            - 3 represents for 'has considerable effect'
+            <br />
+            - 4 represents for 'is completely affected'
+            <br />
+            - Please click "NEXT" in the bottom of the page to enter Page 2.
+          </Typography>
+        );
+      case 2:
+        return (
+          <Typography
+            paragraph
+            align="left"
+            variant="body2"
+            component="p"
+            className={classes.steps}
+          >
+            Page 2. Each question consists of a block with a text snippet from
+            an article block which may or may not appear in Page 1
+            <br />
+            - Please select whether the text snippet has appeared in Page 1 or
+            not. If this text snippet appeared in the first page, please
+            select <span className={classes.highlight}>"Appeared"</span>.
+            Otherwise, please select{' '}
+            <span className={classes.highlight}>"Not Appeared"</span>.
+            <br />
+            - Each decision should be independent.
+            <br />
+            - Please click "SUBMIT" in the bottom of the page to submit your
+            results.
+          </Typography>
+        );
+      default:
+        return null;
+    }
+  };
+
 //submitProgress 0: initial 1: sent 2:success 3:retry
 class Survey extends Component {
   constructor(props) {
@@ -70,6 +177,7 @@ class Survey extends Component {
       selected: prepareSubmission(props.datas),
       numSelected: 0,
       pageID: 0,
+      stepID: 0,
       onReasoning: false,
       msg: '',
       workerid: '',
@@ -103,14 +211,16 @@ class Survey extends Component {
       this.setState(prevState =>
         Object.assign(prevState, {
           numSelected: 0,
-          onReasoning: true
+          onReasoning: true,
+          stepID: prevState.stepID + 1
         })
       );
     } else {
       this.setState(prevState =>
         Object.assign(prevState, {
           numSelected: 0,
-          pageID: prevState.pageID + 1
+          pageID: prevState.pageID + 1,
+          stepID: prevState.stepID + 1
         })
       );
     }
@@ -156,7 +266,7 @@ class Survey extends Component {
 
   render() {
     const { classes } = this.props;
-    const pageID = this.state.pageID;
+    const {pageID, stepID} = this.state;
     const selectable = this.props.datas[pageID]
       ? this.state.numSelected < this.props.datas[pageID].length
       : false;
@@ -255,6 +365,9 @@ class Survey extends Component {
 
     return (
       <div>
+        <Paper className={classes.instruction} elevation={4}>
+          {getStepContent(classes, stepID)}
+        </Paper>
         {conditionalRendering(pageID)}
         <Button
           size="large"
