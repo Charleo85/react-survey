@@ -18,15 +18,16 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3
   },
   instruction: {
-    fontSize: 'medium',
+    fontSize: '28px',
     color: '#111111'
   },
   highlight: {
-    fontSize: 'large',
+    fontSize: '28px',
     fontStyle: 'italic',
-    backgroundColor: 'transparent',
-    backgroundImage:
-      'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
+    color: '#D50000'
+    // backgroundColor: 'transparent',
+    // backgroundImage:
+      // 'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
   },
   root: theme.mixins.gutters({
     paddingTop: 16,
@@ -52,7 +53,7 @@ class Instruction extends Component {
           component="h1"
           className={classes.instruction}
         >
-            This task is composed of several questions under three steps. <span className={classes.highlight}>For questions in each step, instructions are different. Please carefully read instructions on each page.</span>
+            This task is composed of several questions over three pages. <span className={classes.highlight}>For questions in each page, instructions are different. </span> Please carefully read instructions on each page.
         </Typography>
       </Paper>
     );

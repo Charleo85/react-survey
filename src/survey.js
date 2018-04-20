@@ -38,6 +38,18 @@ const styles = theme => ({
     fontSize: 'large',
     fontStyle: 'italic',
   },
+  page:{
+    fontSize: '20px',
+    color: '#0091EA',
+  },
+  title:{
+     color: '#4FC3F7',
+  }
+  ,
+  textsnippet:{
+     color: '#81C784',
+  }
+  ,
   highlight: {
     fontSize: 'large',
     fontStyle: 'italic',
@@ -48,6 +60,10 @@ const styles = theme => ({
   steps: {
     fontSize: 'medium',
     color: '#333333'
+  },
+  stepIndicator:{
+    fontSize: '20px',
+    color: '#0091EA'
   },
   instruction: theme.mixins.gutters({
     paddingTop: 16,
@@ -90,28 +106,19 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            Step 1. Each question consists of a block with the title and a
-            text snippet of an article, like the following example:
+            <span className={classes.page}>Page 1.</span> You are required to answer 4 questions. Each question is about an article. We present the <span className={classes.title}>title</span> of the article and a <span className={classes.textsnippet}>text snippet</span> of the article to you, like the following example:
             <img
-              src={require('./img/example.jpg')}
+              src={require('./img/example.png')}
               style={{ width: '100%', maxWidth: '500px', display: 'block' }}
             />
-            - Make sure you{' '}
-            <span className={classes.highlight}>read through</span> each of
-            them carefully and you will need to roughly{' '}
-            <span className={classes.highlight}>remember</span> the content of
-            these snippets to answer questions in the next page.
-            <br />
-            - Please select whether you will read this article or not, after
-            reading its title and text snippet.
-            <br />
-            - If you will read the article, please select "Interested".
-            Otherwise, select "Not Interested".
-            <br />
-            - Each decision must be independent.
-            <br />
-            - Please click "Next" in the bottom of the page to finish the rest
-            questions on Page 1.
+
+            <span className={classes.page}>Instructions:</span> <br />
+            <span className={classes.stepIndicator}>*</span> Please carefully read the title which is in bold. {' '} <br />
+            <span className={classes.stepIndicator}>*</span> Please carefully read the text snippet below the title.{' '}<br />
+            <span className={classes.stepIndicator}>*</span> The content of title and text snippet are useful to finish the survey, so please read them carefully and remember them.  {' '} <br />
+            <span className={classes.stepIndicator}>*</span> Each question must be answered independently. {' '} <br />
+            <span className={classes.stepIndicator}>*</span> Please click "NEXT" in the bottom after finishing all questions. {' '}
+
           </Typography>
         );
       case 1:
@@ -123,21 +130,13 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            Step 2. Please select to what extent your choice of whether to read the
-            article or not is affected by the article title, text snippet as
-            well as the article topic you infer from the text.
-            <br />
-            - 0 represents for 'has not effect at all'
-            <br />
-            - 1 represents for 'has a little effect'
-            <br />
-            - 2 represents for 'is somewhat affected'
-            <br />
-            - 3 represents for 'has considerable effect'
-            <br />
-            - 4 represents for 'is completely affected'
-            <br />
-            - Please click "NEXT" in the bottom of the page to enter Page 2.
+          <span className={classes.page}>Page 2.</span> You are required to finish 12 questions about 4 articles. Based on your choice of reading the article or not in page 1, please tell us to which extent the <span className={classes.stepIndicator}>title</span>, the <span className={classes.stepIndicator}>text snippet</span> and the <span className={classes.stepIndicator}>topic</span> you inferred from the title and text snippet influence your choice. We categorize the influence to five levels: Not at all influential; slightly influential; somewhat influential; very influential ; Extremely influential <br />  
+
+            <span className={classes.page}>Instructions:</span> <br />
+            <span className={classes.stepIndicator}>*</span> Please select to which extent did the <span className={classes.stepIndicator}> title</span> influence your choice? {' '} <br />
+             <span className={classes.stepIndicator}>*</span> Please select to which extent did the <span className={classes.stepIndicator}> text snippet</span> influence your choice? {' '} <br />
+              <span className={classes.stepIndicator}>*</span> Please select to which extent did the <span className={classes.stepIndicator}> topic </span> influence your choice? {' '} <br />
+             <span className={classes.stepIndicator}>*</span> Please click "NEXT" in the bottom after finishing all questions. {' '}
           </Typography>
         );
       case 2:
@@ -149,19 +148,11 @@ const getStepContent = (classes, step) => {
             component="p"
             className={classes.steps}
           >
-            Step 3. Each question consists of a block with a text snippet from
-            an article block which may or may not appear in Page 1
-            <br />
-            - Please select whether the text snippet has appeared in Page 1 or
-            not. If this text snippet appeared in the first page, please
-            select <span className={classes.highlight}>"Appeared"</span>.
-            Otherwise, please select{' '}
-            <span className={classes.highlight}>"Not Appeared"</span>.
-            <br />
-            - Each decision should be independent.
-            <br />
-            - Please click "SUBMIT" in the bottom of the page to submit your
-            results.
+          <span className={classes.page}>Page 3.</span> You are required to answer 3 questions about 3 text snippets. You need to recall text snippets you have read in Page 1.<br />
+          <span className={classes.page}>Instructions:</span> <br />
+          <span className={classes.stepIndicator}>*</span>  Please read the text snippet {' '} <br />
+           <span className={classes.stepIndicator}>*</span> Please tell us whether the text snippet has appeared in Page 1.  {' '} <br />
+            <span className={classes.stepIndicator}>*</span> Please click "NEXT" in the bottom after finishing all questions. {' '}
           </Typography>
         );
       case 3:

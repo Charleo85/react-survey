@@ -197,7 +197,7 @@ class TextChoice extends Component {
         <CardActions className={classes.actionSec}>
           <div className={classes.actionBar}>
             <Typography paragraph align="left" variant="body1" component="p" className={classes.question}>
-              Did this text snippet appear in Step 1?
+              Did this text snippet appear in Page 1?
             </Typography>
             <Button
               onClick={this.selectAction(1)}
