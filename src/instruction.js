@@ -12,11 +12,11 @@ const styles = theme => ({
 		marginRight: theme.spacing.unit
 	},
 	instruction: {
-		fontSize: '22px',
+		fontSize: '18px',
 		color: '#111111'
 	},
 	highlight: {
-		fontSize: '22px',
+		fontSize: '18px',
 		fontStyle: 'italic',
 		color: '#D50000'
 	},
@@ -43,9 +43,9 @@ class Instruction extends Component {
 					component="h1"
 					className={classes.instruction}
 				>
-        In this survey, you need to answer 3 pages of questions. It takes less than 2 minutes on average to finish.
-					<span className={classes.highlight}> Each page has different instructions; </span>
-          please read instructions carefully on each page.
+          This task is composed of several questions over 3 pages. It takes in average less than 2 mins to finish.<br/>
+					<span className={classes.highlight}> Questions on each page has different instructions, </span>
+          so make sure you read carefully the instructions on every page.
 				</Typography>
 			</Paper>
 		);
