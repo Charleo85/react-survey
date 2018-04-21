@@ -112,8 +112,8 @@ const getStepContent = (classes, step) => {
 					style={{ width: '100%', maxWidth: '500px', display: 'block', margin: 'auto'}}
 				/>
 				<span className={classes.page}>Instructions:</span> <br />
-        <Bullet/> Please carefully read the <Title/>.<br />
-        <Bullet/> Please carefully read the <TextSnippet/>.<br />
+        <Bullet/> Please carefully read the <Title/> of the article.<br />
+        <Bullet/> Please carefully read the <TextSnippet/> of the article.<br />
         <Bullet/> Please carefully read them and
         <span className={classes.emphasizedWords}> roughly remember </span>them until the end of this survey, as they are useful to finish the rest part of the survey <br />
         <Bullet/> Please tell us whether you will click and read more of the article. <br />
