@@ -68,7 +68,10 @@ const styles = theme => ({
   },
   gridItem: {
     textAlign: 'center',
-  }
+  }, 
+  emphasizedWords:{
+    color: '#D50000'
+  },
 });
 
 const prepareSubmission = obj =>
@@ -102,18 +105,20 @@ const getStepContent = (classes, step) => {
 				className={classes.steps}
 			>
 				<span className={classes.page}>Page 1. </span>
-          There are 4 article briefings block each with 1 question. For each article briefings block, we present the <Title/> of the article follow by a <TextSnippet/> of the article to you as the example below:
+        You are required to finish 4 questions. For each question, we present the <Title/> of an article and a <TextSnippet/> of the article to you. The following is an example of the question. 
 				<img
-					src={require('./img/example.png')}
+					src={require('./img/example1.png')}
 					alt={'example'}
 					style={{ width: '100%', maxWidth: '500px', display: 'block', margin: 'auto'}}
 				/>
 				<span className={classes.page}>Instructions:</span> <br />
-        <Bullet/>After you read this article briefing block, tell us whether you will click and read more of the article. <br />
-        <Bullet/>Each choice should be independent. <br />
-				<Bullet/>The content of the <Title/> and <TextSnippet/> are useful to finish the rest part of the survey, so you need to read them careful enough that you can
-        <span className={classes.highlight}> roughly remember </span>them until the end of this survey. <br />
-				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
+        <Bullet/> Please carefully read the <Title/>.<br />
+        <Bullet/> Please carefully read the <TextSnippet/>.<br />
+        <Bullet/> Please carefully read them and
+        <span className={classes.emphasizedWords}> roughly remember </span>them until the end of this survey, as they are useful to finish the rest part of the survey <br />
+        <Bullet/> Please tell us whether you will click and read more of the article. <br />
+				
+				<Bullet/>Please click "NEXT" in the bottom after finishing all questions. Each answer should be independent. <br />
 			</Typography>
 		);
 	case 1:
@@ -126,7 +131,7 @@ const getStepContent = (classes, step) => {
 				className={classes.steps}
 			>
 				<span className={classes.page}>Page 2. </span>
-          There are 4 article briefings block each with 3 questions. Based on your choice of whether to read the article or not on page 1, please select how much <Title/>, <TextSnippet/> and the <Topic/> you inferred from the title and text snippet influence your choice.
+          Based on your choice of whether to read the article or not on page 1, please select how much <Title/>, <TextSnippet/> and the <Topic/> you inferred from the title and text snippet influence your choice.
           We categorize such influence to the five levels below: <br />
           <div className={classes.gridContainer}>
             <div className={classes.gridItem}>Not at all influential</div>
@@ -136,7 +141,7 @@ const getStepContent = (classes, step) => {
             <div className={classes.gridItem}>Extremely influential</div>
           </div>
 				<span className={classes.page}>Instructions:</span> <br />
-        <Bullet/>Each choice should be independent. <br />
+        <Bullet/>Each answer should be independent. <br />
 
 				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
 			</Typography>
@@ -151,7 +156,7 @@ const getStepContent = (classes, step) => {
 				className={classes.steps}
 			>
 				<span className={classes.page}>Page 3. </span>
-        There are 3 pieces of text snippet block each with 1 question. You need to recall the text snippets you have read in Page 1.<br />
+        There are 3 questions. For each question, we present you a piece of text snippet. You need to recall the text snippets you have read in Page 1.<br />
 				<span className={classes.page}>Instructions:</span> <br />
 				<Bullet/>Please read the text snippet and tell us whether the text snippet has appeared in Page 1. <br />
 				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
