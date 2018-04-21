@@ -43,7 +43,7 @@ class Instruction extends Component {
 					component="h1"
 					className={classes.instruction}
 				>
-          This task is composed of several questions over 3 pages. It costs in average less than 2 mins to finish.<br/>
+          This task is composed of several questions over 3 pages. It takes in average less than 2 mins to finish.<br/>
 					<span className={classes.highlight}> Questions on each page has different instructions, </span>
           so make sure you read carefully the instructions on every page.
 				</Typography>
