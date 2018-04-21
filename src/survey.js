@@ -10,7 +10,7 @@ import { submitResponse } from './action.js';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Paper from 'material-ui/Paper';
-import {Bullet, Title, TextSnippet, Topic} from './constant.js';
+import Instruction from './instruction.js';
 
 const styles = theme => ({
 	root: {
@@ -32,43 +32,7 @@ const styles = theme => ({
 		maxWidth: 200,
 		display: 'flex',
 		margin: 'auto'
-	},
-	formText: {
-		marginTop: 10,
-		marginBottom: 10,
-		fontSize: 'large',
-		fontStyle: 'italic'
-	},
-	page: {
-		fontSize: '20px',
-		color: '#0091EA'
-	},
-	highlight: {
-		fontSize: 'large',
-		fontStyle: 'italic',
-		backgroundColor: 'transparent',
-		backgroundImage:
-      'linear-gradient(to bottom,rgba(255, 111, 0,.2),rgba(255, 111, 0,.2))'
-	},
-	steps: {
-		fontSize: 'medium',
-		color: '#333333'
-	},
-	instruction: theme.mixins.gutters({
-		paddingTop: 16,
-		paddingBottom: 16,
-		marginTop: theme.spacing.unit * 3,
-		marginBottom: theme.spacing.unit * 3,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		maxWidth: 900
-	}),
-  gridContainer: {
-    display: 'grid'
-  },
-  gridItem: {
-    textAlign: 'center',
-  }
+	}
 });
 
 const prepareSubmission = obj =>
@@ -90,101 +54,7 @@ const prepareSubmission = obj =>
 		[]
 	);
 
-const getStepContent = (classes, step) => {
-	switch (step) {
-	case 0:
-		return (
-			<Typography
-				paragraph
-				align="left"
-				variant="body2"
-				component="div"
-				className={classes.steps}
-			>
-				<span className={classes.page}>Page 1. </span>
-          There are 4 article briefings block each with 1 question. For each article briefings block, we present the <Title/> of the article follow by a <TextSnippet/> of the article to you as the example below:
-				<img
-					src={require('./img/example.png')}
-					alt={'example'}
-					style={{ width: '100%', maxWidth: '500px', display: 'block', margin: 'auto'}}
-				/>
-				<span className={classes.page}>Instructions:</span> <br />
-        <Bullet/>After you read this article briefing block, tell us whether you will click and read more of the article. <br />
-        <Bullet/>Each choice should be independent. <br />
-				<Bullet/>The content of the <Title/> and <TextSnippet/> are useful to finish the rest part of the survey, so you need to read them careful enough that you can
-        <span className={classes.highlight}> roughly remember </span>them until the end of this survey. <br />
-				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
-			</Typography>
-		);
-	case 1:
-		return (
-			<Typography
-				paragraph
-				align="left"
-				variant="body2"
-				component="div"
-				className={classes.steps}
-			>
-				<span className={classes.page}>Page 2. </span>
-          There are 4 article briefings block each with 3 questions. Based on your choice of whether to read the article or not on page 1, please select how much <Title/>, <TextSnippet/> and the <Topic/> you inferred from the title and text snippet influence your choice.
-          We categorize such influence to the five levels below: <br />
-          <div className={classes.gridContainer}>
-            <div className={classes.gridItem}>Not at all influential</div>
-            <div className={classes.gridItem}>Slightly influential</div>
-            <div className={classes.gridItem}>Somewhat influential</div>
-            <div className={classes.gridItem}>Very influential</div>
-            <div className={classes.gridItem}>Extremely influential</div>
-          </div>
-				<span className={classes.page}>Instructions:</span> <br />
-        <Bullet/>Each choice should be independent. <br />
 
-				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
-			</Typography>
-		);
-	case 2:
-		return (
-			<Typography
-				paragraph
-				align="left"
-				variant="body2"
-				component="div"
-				className={classes.steps}
-			>
-				<span className={classes.page}>Page 3. </span>
-        There are 3 pieces of text snippet block each with 1 question. You need to recall the text snippets you have read in Page 1.<br />
-				<span className={classes.page}>Instructions:</span> <br />
-				<Bullet/>Please read the text snippet and tell us whether the text snippet has appeared in Page 1. <br />
-				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
-			</Typography>
-		);
-	case 3:
-		return (
-			<div>
-				<Typography
-					paragraph
-					align="left"
-					variant="body2"
-					component="p"
-					className={classes.steps}
-				>
-            You should be able to find your MTurk worker ID on the top of the
-            Amazon MTurk Dashboard. You may just enter your name if you are not
-            a MTurk worker
-				</Typography>
-				<Typography
-					className={classes.formText}
-					align="center"
-					variant="body1"
-				>
-            NOTE: If you do not correctly enter your MTurk worker ID, we cannnot
-            guarantee to pay you.
-				</Typography>
-			</div>
-		);
-	default:
-		return null;
-	}
-};
 
 //submitProgress 0: initial 1: sent 2:success 3:retry
 class Survey extends Component {
@@ -394,9 +264,7 @@ class Survey extends Component {
 
   	return (
   		<div>
-  			<Paper className={classes.instruction} elevation={4}>
-  				{getStepContent(classes, stepID)}
-  			</Paper>
+        <Instruction stepID={stepID}/>
   			{conditionalRendering(pageID)}
   			<Button
   				size="large"

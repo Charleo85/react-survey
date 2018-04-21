@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Survey from './survey.js';
-import Instruction from './instruction.js';
 import { fetchData } from './action.js';
 
 import { withStyles } from 'material-ui/styles';
@@ -29,7 +28,6 @@ class App extends Component {
 		const surveyLoadSucceed = this.state.question != null;
 		return (
 			<div className="App">
-				<Instruction />
 				{surveyLoadSucceed ? (
 					<Survey datas={this.state.question} />
 				) : (

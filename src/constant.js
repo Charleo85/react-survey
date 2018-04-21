@@ -23,6 +23,12 @@ export const typeDescription = (type) => {
 	}
 };
 
+export const stepDescription = [
+  'Select the article of your interest',
+  'Feedback on your choice',
+  'Impression of the articles'
+];
+
 export const Bullet = () => (
   <span style={{color: '#0091EA'}}>* </span>
 );
