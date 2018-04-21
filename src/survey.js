@@ -3,13 +3,11 @@ import { ImgChoiceType, TextChoiceType } from './choice.js';
 import Button from 'material-ui/Button';
 import Fade from 'material-ui/transitions/Fade';
 import { CircularProgress } from 'material-ui/Progress';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { has, get, set, reduce } from 'lodash';
 import { submitResponse } from './action.js';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
-import Paper from 'material-ui/Paper';
 import Instruction from './instruction.js';
 
 const styles = theme => ({

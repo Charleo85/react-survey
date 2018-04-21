@@ -24,9 +24,10 @@ export const typeDescription = (type) => {
 };
 
 export const stepDescription = [
-  'Select the article of your interest',
-  'Feedback on your choice',
-  'Impression of the articles'
+  'Article of your interest',
+  'Feedback on your choices',
+  'Impression of the articles',
+	'Register your MTurk Worker ID'
 ];
 
 export const Bullet = () => (
