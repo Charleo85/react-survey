@@ -63,7 +63,7 @@ const getStepContent = (classes, step) => {
 				className={classes.steps}
 			>
 				<span className={classes.page}>Page 1. </span>
-          There are 4 questions on this page. For each question, we present the <Title/> of the article follow by a <TextSnippet/> of the article to you as the example below:
+          There are 4 questions on this page. For each question, we present the <Title/> of the article follow by a <TextSnippet/> of the article to you, like the example below:
 				<img
 					src={require('./img/example.png')}
 					alt={'example'}
@@ -73,7 +73,7 @@ const getStepContent = (classes, step) => {
         <Bullet/>After you read the <Title/> and <TextSnippet/>, tell us whether you will click and read more of the article. <br />
         <Bullet/>Each choice should be independent. <br />
 				<Bullet/>The content of the <Title/> and <TextSnippet/> are useful to finish the rest part of the survey, so you need to read them careful enough that you can
-        <span className={classes.highlight}> roughly remember </span>them until the end of this survey. <br />
+        <span className={classes.highlight}> roughly remember </span>them at the Page 3 of this survey. <br />
 				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
 			</Typography>
 		);
@@ -98,7 +98,6 @@ const getStepContent = (classes, step) => {
           </div>
 				<span className={classes.page}>Instructions:</span> <br />
         <Bullet/>Each choice should be independent. <br />
-
 				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
 			</Typography>
 		);
@@ -112,7 +111,7 @@ const getStepContent = (classes, step) => {
 				className={classes.steps}
 			>
 				<span className={classes.page}>Page 3. </span>
-        There are 3 questions. For each question, we present you a piece of text snippet. You need to recall the text snippets you have read in Page 1.<br />
+        There are 3 questions. For each question, we present you with a text snippet. You need to recall the text snippets you have read in Page 1.<br />
 				<span className={classes.page}>Instructions:</span> <br />
 				<Bullet/>Please read the text snippet and tell us whether the text snippet has appeared in Page 1. <br />
 				<Bullet/>Please click "NEXT" in the bottom after finishing all questions.
@@ -137,8 +136,8 @@ const getStepContent = (classes, step) => {
 					align="center"
 					variant="body1"
 				>
-            NOTE: If you do not correctly enter your MTurk worker ID, we cannnot
-            guarantee to pay you.
+            NOTE: If you do not correctly enter your MTurk worker ID, we cannot
+            guarantee the payment to you.
 				</Typography>
 			</div>
 		);
@@ -159,7 +158,7 @@ class Instruction extends Component {
 					component="h1"
 					className={classes.mainText}
 				>
-          In this survey, you need to answer 3 pages of questions. It takes less than 2 mins on average to finish.<br/>
+          In this survey, you need to answer 3 pages of questions. It takes less than 3 mins on average to finish.<br/>
 					<span className={classes.highlight}> Each page has different instructions; </span>
           so make sure you read the instructions on each page.
 				</Typography>
