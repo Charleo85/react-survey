@@ -159,7 +159,7 @@ class Instruction extends Component {
 					component="h1"
 					className={classes.mainText}
 				>
-          In this survey, you need to answer 3 pages of questions. It takes less than 2 minutes on average to finish.
+          In this survey, you need to answer 3 pages of questions. It takes less than 5 minutes on average to finish.
 					<span className={classes.highlight}> Each page has different instructions; </span>
           so make sure you read the instructions on each page.
 				</Typography>
