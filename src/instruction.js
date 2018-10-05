@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import Stepper, { Step, StepLabel, StepContent } from 'material-ui/Stepper';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Stepper, { Step, StepLabel, StepContent } from '@material-ui/core/Stepper';
 import {Bullet, Title, TextSnippet, Topic, stepDescription} from './constant.js';
 
 const styles = theme => ({

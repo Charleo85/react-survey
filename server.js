@@ -47,12 +47,14 @@ const questionsFrom = (samples) => {
   return [shuffle(q1), shuffle(q2)];
 }
 
+const db_url = 'mongodb://localhost';
+const db_name = 'highlight-survey';
 
 app.get('/loadquestions', (req, res) => {
-  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+  MongoClient.connect(db_url,  { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
 
-    client.db('highlight-survey').collection('images').find({}).toArray( (err, result) => {
+    client.db(db_name).collection('images').find({}).toArray( (err, result) => {
       if (err) throw err;
       samples = sampleSize(result, 5);
       res.json(questionsFrom(samples));
@@ -77,10 +79,10 @@ const validate = (response)=>{
 }
 
 const saveResponse = (response, completionid, valid, success, fail)=>{
-  MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+  MongoClient.connect(db_url, { useNewUrlParser: true },  (err, client) => {
     if (err) throw err
 
-    client.db('highlight-survey').collection('responses').insertOne(
+    client.db(db_name).collection('responses').insertOne(
       {answer: response.data, workerid: response.workerid, completionid, valid, timestamp: Date.now()}
     )
     .then(() => {

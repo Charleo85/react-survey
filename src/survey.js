@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { ImgChoiceType, TextChoiceType } from './choice.js';
-import Button from 'material-ui/Button';
-import Fade from 'material-ui/transitions/Fade';
-import { CircularProgress } from 'material-ui/Progress';
-import { withStyles } from 'material-ui/styles';
+import Button from '@material-ui/core/Button';
+import Fade from '@material-ui/core/Fade';
+import CircularProgress  from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
 import { has, get, set, reduce } from 'lodash';
 import { submitResponse } from './action.js';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input, { InputLabel } from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Instruction from './instruction.js';
 
 const styles = theme => ({

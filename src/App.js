@@ -3,9 +3,9 @@ import './App.css';
 import Survey from './survey.js';
 import { fetchData } from './action.js';
 
-import { withStyles } from 'material-ui/styles';
-import Fade from 'material-ui/transitions/Fade';
-import { CircularProgress } from 'material-ui/Progress';
+import { withStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({});
 

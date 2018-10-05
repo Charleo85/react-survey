@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Radio from 'material-ui/Radio';
-import green from 'material-ui/colors/green';
-import Button from 'material-ui/Button';
-import Divider from 'material-ui/Divider';
-import ButtonBase from 'material-ui/ButtonBase';
+import Card, { CardActions, CardContent } from '@material-ui/core/Card';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
+import green from '@material-ui/core/colors/green';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import { scaleDescription, types, typeDescription, QuestionText1, QuestionText3 } from './constant.js';
 
 const styles = theme => ({
