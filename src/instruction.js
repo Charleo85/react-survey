@@ -3,7 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Stepper, { Step, StepLabel, StepContent } from '@material-ui/core/Stepper';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
 import {Bullet, Title, TextSnippet, Topic, stepDescription} from './constant.js';
 
 const styles = theme => ({
