@@ -3,12 +3,8 @@ const url = '';//'https://hcdm.cs.virginia.edu:8088';
 export const fetchData = (callback, fail) =>
 	fetch(url + '/loadquestions', {
 	mode: 'same-origin',
-	headers: { 'content-type': 'application/json' },
 	method: 'GET'
 })
-		.then(response => {
-			console.log("loadquestion status "+ response.status)
-		})
 		.then(response => response.json())
 		.then(response => {
 			callback(response);

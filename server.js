@@ -8,6 +8,7 @@ const shuffle = require('lodash/shuffle');
 const has = require('lodash/has');
 const path = require('path');
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
 
 const questionsFrom = (samples) => {
@@ -125,6 +126,6 @@ const options = {
   key: fs.readFileSync(PATH_TO_KEY)
 };
 
-const server = https.createServer(options, app);
-
-server.listen(8088, () => console.log('Server listening on port 8088!'))
+//const server = https.createServer(options, app);
+//server.listen(8088, () => console.log('Server listening on port 8088!'))
+app.listen(8088, () => console.log('Server listening on port 8088!'))

@@ -43,5 +43,5 @@
     "prettier": "^1.11.1",
     "webshot": "^0.18.0"
   },
-  "homepage": "https://hcdm.cs.virginia.edu:8088"
+  "homepage": "http://hcdm.cs.virginia.edu:8088"
 }
